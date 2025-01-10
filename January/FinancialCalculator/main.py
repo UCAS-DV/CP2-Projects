@@ -5,61 +5,42 @@ import math
 # How long it will take to save for a goal based on a weekly or monthly deposit []
 # Budget Allocator (use set percentages to divide an income into spending categories) []
 
-spending_categories = [
-    {
-        "name": "Food",
-        "percentage": 20
-    }
-]
-
 def floatInput(prompt):
     try:
         return float(input(prompt))
     except:
         return None
 
-# Sale Price Calculator (apply discounts to prices) [x]
-def salesPrice():
-    price = floatInput("What is the cost of the purchase? ")
-    discount = floatInput("What is the discount in percentage points? ")
-
-    if None in [price, discount]:
-        print("Invalid Input in either price or tip. Returning to main menu...")
+def checkInputs(inputs):
+    if None in inputs:
+        print("Invalid Input. Returning to main menu...")
         return None
 
-    print(f"If you apply a {discount}% to a ${price} purchase, \nyou will pay: ${price * (1 - (discount / 100))}")
+# Sale Price Calculator (apply discounts to prices) [x]
+def salesPrice(price, discount):
+
+    checkInputs([price, discount])
+
+    print(f"If you apply a {discount}% to a ${price:.2f} purchase, \nyou will pay: ${price * (1 - (discount / 100)):.2f}")
 
 # Tip Calculator [x]
-def tip():
+def tip(price, tip):
 
-    price = floatInput("What is the cost of the purchase? ")
-    tip = floatInput('How high is the tip in percentage points? ')
-
-    if None in [price, tip]:
-        print("Invalid Input in either price or tip. Returning to main menu...")
-        return None
-
-    print(f"If you pay a {tip}% for a ${price} purchase, \nyou will pay: ${price * (1 + (tip / 100))}") 
+    checkInputs([price, tip])
+    print(f"If you pay a {tip}% for a ${price:.2f} purchase, \nyou will pay: ${price * (1 + (tip / 100)):.2f}") 
 
 # Compound Interest Calculator []
-def compoundInterest():
+def compoundInterest(principle, rate, compound, time):
 
-    principle = floatInput('How much did you initially invest? ')
-    rate = floatInput('What is your annual interest rate in percentage points? ') / 100
-    compound = floatInput('How many times does your investment compound per year? ')
-    time = floatInput('How many years has your investment compounded? ')
+    checkInputs([principle, rate, compound, time])
 
-    if None in [principle, rate, compound, time]:
-        print("Invalid Input in either price or tip. Returning to main menu...")
-        return None
-
-    print(f'Your investment of ${principle} with an annual interest rate of {rate}%, compounded {compound} times a year for {time}')
+    print(f'Your investment of ${principle:.2f} with an annual interest rate of {rate}%, compounded {compound} times a year for {time}')
     # Equation: P(1 + r/c)^nt
     # P = Principle
     # r = Rate
     # c = Compound
     # t = Time (in years)
-    print(f'will be worth: ${principle * ((1 + (rate / compound ))**(compound * time)):.2f}')
+    print(f'will be worth: ${principle * ((1 + ((rate/100) / compound ))**(compound * time)):.2f}')
 
 def savingsGoal():
     time = -1
@@ -75,9 +56,15 @@ def savingsGoal():
     
     amountSaved = math.floor(floatInput("How much do you save every time you add to your savings? "))
 
+    checkInputs([amountSaved, frequency, goal])
+
+    time = math.ceil(goal / (frequency * amountSaved))
+
     if frequency == 7:
-        time = math.ceil(goal / (frequency * amountSaved))
-        print(f"If you save ${amountSaved} every week, you will reach your goal of ${goal} in {time} days \nor {math.ceil(time / 7)} weeks \nor {math.ceil(time / 30)} months")
+        print(f"If you save ${amountSaved} every week, you will reach your goal of ${goal} in {time}")
+    if frequency == 30:
+        print(f"If you save ${amountSaved} every month, you will reach your goal of ${goal} in {time} days \nor {math.ceil(time / 7)} weeks \nor {math.ceil(time / 30)} months")
+
 
 
 def main():
@@ -89,12 +76,15 @@ def main():
 
         match choice:
             case "1":
-                salesPrice()
+                salesPrice(price = floatInput("What is the cost of the purchase? "), discount = floatInput("What is the discount in percentage points? "))
             case "2":
-                tip()
+                tip(price = floatInput("What is the cost of the purchase? "), tip = floatInput('How high is the tip in percentage points? '))
             case "3":
-                compoundInterest()
-            case "4":
+                compoundInterest(principle = floatInput('How much did you initially invest? '), 
+                                 rate = floatInput('What is your annual interest rate in percentage points? '),
+                                 compound = floatInput('How many times does your investment compound per year? '),
+                                 time = floatInput('How many years has your investment compounded? '))
+            case "5":
                 savingsGoal()
             case "6":
                 print("Closing Program...")
