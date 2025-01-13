@@ -2,7 +2,6 @@
 
 import math
 
-# How long it will take to save for a goal based on a weekly or monthly deposit []
 # Budget Allocator (use set percentages to divide an income into spending categories) []
 
 def floatInput(prompt):
@@ -29,7 +28,7 @@ def tip(price, tip):
     checkInputs([price, tip])
     print(f"If you pay a {tip}% for a ${price:.2f} purchase, \nyou will pay: ${price * (1 + (tip / 100)):.2f}") 
 
-# Compound Interest Calculator []
+# Compound Interest Calculator [x]
 def compoundInterest(principle, rate, compound, time):
 
     checkInputs([principle, rate, compound, time])
@@ -42,6 +41,7 @@ def compoundInterest(principle, rate, compound, time):
     # t = Time (in years)
     print(f'will be worth: ${principle * ((1 + ((rate/100) / compound ))**(compound * time)):.2f}')
 
+# How long it will take to save for a goal based on a weekly or monthly deposit [x]
 def savingsGoal():
     time = -1
     goal = floatInput("How much is your savings goal? ")   
@@ -52,18 +52,19 @@ def savingsGoal():
     elif frequency == "2":
         frequency = 30
     else:
-        frequency = None
+        print("Invalid Frequency")
+        return None
     
     amountSaved = math.floor(floatInput("How much do you save every time you add to your savings? "))
 
     checkInputs([amountSaved, frequency, goal])
 
-    time = math.ceil(goal / (frequency * amountSaved))
+    time = math.ceil(goal * frequency / (amountSaved))
 
     if frequency == 7:
-        print(f"If you save ${amountSaved} every week, you will reach your goal of ${goal} in {time}")
+        print(f"If you save ${amountSaved} every week, you will reach your goal of ${goal} in {time} days, \nor {math.ceil(time / 7)} weeks")
     if frequency == 30:
-        print(f"If you save ${amountSaved} every month, you will reach your goal of ${goal} in {time} days \nor {math.ceil(time / 7)} weeks \nor {math.ceil(time / 30)} months")
+        print(f"If you save ${amountSaved} every month, you will reach your goal of ${goal} in {time} days \nor {math.ceil(time / 30)} months")
 
 
 
