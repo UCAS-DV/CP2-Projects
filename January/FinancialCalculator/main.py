@@ -22,9 +22,8 @@ def salesPrice(price, discount):
 
     print(f"If you apply a {discount}% to a ${price:.2f} purchase, \nyou will pay: ${price * (1 - (discount / 100)):.2f}")
 
-# Tip Calculator [x]
+# Tip Calculator
 def tip(price, tip):
-
     checkInputs([price, tip])
     print(f"If you pay a {tip}% for a ${price:.2f} purchase, \nyou will pay: ${price * (1 + (tip / 100)):.2f}") 
 
@@ -34,7 +33,8 @@ def compoundInterest(principle, rate, compound, time):
     checkInputs([principle, rate, compound, time])
 
     print(f'Your investment of ${principle:.2f} with an annual interest rate of {rate}%, compounded {compound} times a year for {time}')
-    # Equation: P(1 + r/c)^nt
+
+    # Formula: P(1 + r/c)^nt
     # P = Principle
     # r = Rate
     # c = Compound
@@ -45,6 +45,7 @@ def compoundInterest(principle, rate, compound, time):
 def savingsGoal(goal, amountSaved):
     time = -1
 
+    # Verifies if the frequency is weekly or monthly
     frequency = input("Do add money to your savings weekly or monthly? (Input Number): \n1. Weekly \n2. Monthly \n")
     if frequency == "1":
         frequency = 7
@@ -55,6 +56,7 @@ def savingsGoal(goal, amountSaved):
     
     checkInputs([amountSaved, frequency, goal])
 
+    # Calculates the amount of time (in days) it will take to reach the savings goal
     time = math.ceil(goal * frequency / (amountSaved))
 
     if frequency == 7:
@@ -75,6 +77,7 @@ def allocateBudget(income):
         newCategory = input("What is a spending category you wish to allocate money to? ")
         portion = floatInput("How much of your income in percentage points do you wish to put into that category? ")
         
+        # Ensures the portion is a valid number and that it doesn't go below the amount of money
         if portion == None or (remainingPortion - portion) < 0:
             input("Invalid Value. Value is either too high or incorrectly inputted. Press enter to retry.")
             continue
@@ -86,6 +89,7 @@ def allocateBudget(income):
         remainingPortion -= portion
         remainingMoney *= (remainingPortion / 100)
 
+        # Prints all of the categories
         i = 0
         for category in categories:
             print(f"{category} - {percentages[i]}% - ${moneyAllocated[i]}")
