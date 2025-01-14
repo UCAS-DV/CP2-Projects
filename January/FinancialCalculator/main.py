@@ -2,7 +2,7 @@
 
 import math
 
-# Budget Allocator (use set percentages to divide an income into spending categories) []
+
 
 def floatInput(prompt):
     try:
@@ -42,9 +42,8 @@ def compoundInterest(principle, rate, compound, time):
     print(f'will be worth: ${principle * ((1 + ((rate/100) / compound ))**(compound * time)):.2f}')
 
 # How long it will take to save for a goal based on a weekly or monthly deposit [x]
-def savingsGoal():
+def savingsGoal(goal, amountSaved):
     time = -1
-    goal = floatInput("How much is your savings goal? ")   
 
     frequency = input("Do add money to your savings weekly or monthly? (Input Number): \n1. Weekly \n2. Monthly \n")
     if frequency == "1":
@@ -52,11 +51,8 @@ def savingsGoal():
     elif frequency == "2":
         frequency = 30
     else:
-        print("Invalid Frequency")
         return None
     
-    amountSaved = math.floor(floatInput("How much do you save every time you add to your savings? "))
-
     checkInputs([amountSaved, frequency, goal])
 
     time = math.ceil(goal * frequency / (amountSaved))
@@ -65,6 +61,38 @@ def savingsGoal():
         print(f"If you save ${amountSaved} every week, you will reach your goal of ${goal} in {time} days, \nor {math.ceil(time / 7)} weeks")
     if frequency == 30:
         print(f"If you save ${amountSaved} every month, you will reach your goal of ${goal} in {time} days \nor {math.ceil(time / 30)} months")
+
+# Budget Allocator (use set percentages to divide an income into spending categories) []
+def allocateBudget(income):
+    categories = []
+    percentages = []
+    moneyAllocated = []
+    
+    remainingPortion = 100
+    remainingMoney = income
+
+    while remainingPortion > 0:
+        newCategory = input("What is a spending category you wish to allocate money to? ")
+        portion = floatInput("How much of your income in percentage points do you wish to put into that category? ")
+        
+        if portion == None or (remainingPortion - portion) < 0:
+            input("Invalid Value. Value is either too high or incorrectly inputted. Press enter to retry.")
+            continue
+
+        categories.append(newCategory)
+        percentages.append(portion)
+        moneyAllocated.append(income * (portion / 100))
+
+        remainingPortion -= portion
+        remainingMoney *= (remainingPortion / 100)
+
+        i = 0
+        for category in categories:
+            print(f"{category} - {percentages[i]}% - ${moneyAllocated[i]}")
+            i += 1
+
+
+
 
 
 
@@ -85,8 +113,10 @@ def main():
                                  rate = floatInput('What is your annual interest rate in percentage points? '),
                                  compound = floatInput('How many times does your investment compound per year? '),
                                  time = floatInput('How many years has your investment compounded? '))
+            case "4":
+                allocateBudget(income = floatInput("How much money do you make a month? "))
             case "5":
-                savingsGoal()
+                savingsGoal(goal = floatInput("How much is your savings goal? "), amountSaved = floatInput("How much do you save every time you add to your savings? "))
             case "6":
                 print("Closing Program...")
                 break
