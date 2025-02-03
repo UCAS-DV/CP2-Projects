@@ -1,8 +1,23 @@
 # Darius Vaiaoga - P2 - Personal Library Program
-
+# 
 library = []
 
 genres = (
+<<<<<<< HEAD
+    "FPS",
+    "Puzzle",
+    "RPG",
+    "Platformer",
+    "Tower Defense",
+    "Action-Adventure",
+    "Co-op",
+    "Fighting",
+    "Party",
+    "Survival",
+    "Sandbox"
+)
+
+=======
     "Action-Adventure",
     "Fighting",
     "FPS",
@@ -19,6 +34,7 @@ genres = (
 )
 
 # Prints out library
+>>>>>>> 364cdce7c1436db1c3893558333e2e085f1ac0b0
 def showLibrary():
     num = 1
     print("Your Library:")
@@ -30,6 +46,16 @@ def showLibrary():
 def createEntry():
     name = input("What is the name of your game? ")
     
+<<<<<<< HEAD
+    num = 0
+    for genre in genres:
+        print(f"{num}. {genres[num]}")
+
+    try:
+        choosen_genre = genres[int(input("Which genre is your game? (Input Number)"))]
+    except:
+        print()
+=======
     # Prints all possible genres and then asks user what genre they'd like
     num = 1
     for possible_genre in genres:
@@ -41,6 +67,7 @@ def createEntry():
     except:
         input("Invalid Input")
         return None
+>>>>>>> 364cdce7c1436db1c3893558333e2e085f1ac0b0
 
     developer = input("What studio or person developed or published the game? ")
 
