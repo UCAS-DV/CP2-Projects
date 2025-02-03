@@ -50,13 +50,18 @@ def main():
 
         print('1. Translate English to Morse Code \n2. Translate Morse Code to English \n3. Exit')
 
+        # Asks user what they want to do, then does it
         match input('What would you like to do? '):
+
             case '1':
                 input(english_to_morse(input('What do you want to translate into Morse Code? \n')))
+
             case '2':
                 input(morse_to_english(input('What do you want to translate into English? \n')))
+
             case '3':
                 break
+
             case _:
                 input('Invalid Input')
 
