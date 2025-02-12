@@ -98,6 +98,12 @@ def modifyEntry():
                 
                 # Modify Genre
                 case '2':
+                    # Prints all possible genres and then asks user what genre they'd like, like in createEntry()
+                    num = 1
+                    for possible_genre in genres:
+                        print(f"{num}. {possible_genre}")
+                        num += 1
+
                     try:
                         game['genre'] = genres[int(input("Which genre is your game? (Input Number) ")) - 1]
                     except:
@@ -151,7 +157,7 @@ def main():
         print(f"{username}'s Library")
 
         # Asks user to input what they want to do
-        match input("What would you like to do? \n1. Go to Library \n2. Add to Library \n3. Remove from Library \n4. Modify Game \n5. Search in Library \n5. Exit \n"):
+        match input("What would you like to do? \n1. Go to Library \n2. Add to Library \n3. Remove from Library \n4. Modify Game \n5. Search in Library \n6. Exit \n"):
 
             # Show Library
             case "1":
@@ -196,7 +202,7 @@ def main():
                         input("Invalid Input")
 
             # Exists Program
-            case "5":
+            case "6":
                 break
 
         input("Press Enter to continue.")
