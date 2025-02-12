@@ -3,7 +3,6 @@
 library = []
 
 genres = (
-<<<<<<< HEAD
     "FPS",
     "Puzzle",
     "RPG",
@@ -15,9 +14,6 @@ genres = (
     "Party",
     "Survival",
     "Sandbox"
-)
-
-=======
     "Action-Adventure",
     "Fighting",
     "FPS",
@@ -34,28 +30,24 @@ genres = (
 )
 
 # Prints out library
->>>>>>> 364cdce7c1436db1c3893558333e2e085f1ac0b0
-def showLibrary():
+def showLibrary(complex):
     num = 1
     print("Your Library:")
     for game in library:
-        print(f'{num}. {game["name"]} - {game["genre"]} - {game["developer"]}')
+
+        # If the output is supposed to complex, print all details, if not, print only the name and developer
+        if complex:
+            print(f'{num}. {game["name"]} - {game["genre"]} - {game["developer"]} - {game['release year']}')
+
+        else:
+            print(f'{num}. {game['name']} - {game['developer']}')
         num += 1
+
 
 # Asks for name, genre, and developer of game to add it to library
 def createEntry():
     name = input("What is the name of your game? ")
     
-<<<<<<< HEAD
-    num = 0
-    for genre in genres:
-        print(f"{num}. {genres[num]}")
-
-    try:
-        choosen_genre = genres[int(input("Which genre is your game? (Input Number)"))]
-    except:
-        print()
-=======
     # Prints all possible genres and then asks user what genre they'd like
     num = 1
     for possible_genre in genres:
@@ -67,15 +59,20 @@ def createEntry():
     except:
         input("Invalid Input")
         return None
->>>>>>> 364cdce7c1436db1c3893558333e2e085f1ac0b0
 
     developer = input("What studio or person developed or published the game? ")
 
-    library.append({"name": name, "genre": genre, "developer": developer})
+    try:
+        release_year = int(input("What was the year of the game's release? "))
+    except:
+        input('Invalid Input')
+        return None
+
+    library.append({"name": name, "genre": genre, "developer": developer, 'release year': release_year})
 
 # Shows the game library, asks user what to remove, and then loops through the library to find and remove that game.
 def removeEntry():
-    showLibrary()
+    showLibrary(True)
     game_to_remove = input("Which game do you want to remove? ")
     
     for game in library:
@@ -86,16 +83,66 @@ def removeEntry():
     else:
         print(f'Could not find "{game_to_remove}" in your library. Please verify if you spelt the name correctly.')
 
+def modifyEntry():
+    showLibrary(True)
+    game_to_modify = input('Which game do you want to modify? ')
+
+    for game in library:
+
+        if game['name'].lower() == game_to_modify.lower():
+            
+            match input('What detail do you want to change? \n1. Name \n2. Genre \n3. Developer \n4. Release Year \n'):
+                # Modify Name
+                case '1':
+                    game['name'] = input('What is the changed name of the game? ')
+                
+                # Modify Genre
+                case '2':
+                    try:
+                        game['genre'] = genres[int(input("Which genre is your game? (Input Number) ")) - 1]
+                    except:
+                        input("Invalid Input")
+                        return None
+
+                # Modify Developer
+                case '3':
+                    game['developer'] = input("What is the changed developer of the game? ")
+
+                # Modify Release Year
+                case '4':
+                    try:
+                        game['release year'] = int(input("What was the year of the game's release? "))
+                    except:
+                        input('Invalid Input')
+                        return None
+            break
+    else:
+        print(f'Could not find "{game_to_modify}" in your library. Please verify if you spelt the name correctly.')
+
 # Finds and prints games based off of a criteria and a search query
 def search(criteria=''):
     query = input(f"Enter Game {criteria.capitalize()}: ")
     num = 1
 
     for game in library:
-        # If the first two letters of the query match the first two letters of the criteria, print the game info.
-        if [game[criteria][0], game[criteria][1]] == [query[0], query[1]]:
-            print(f'{num}. {game["name"]} - {game["genre"]} - {game["developer"]}')
-            num += 1
+        
+        if criteria != 'release year':
+
+            # If the first two letters of the query match the first two letters of the criteria, print the game info.
+            if [game[criteria][0], game[criteria][1]] == [query[0], query[1]]:
+                print(f'{num}. {game["name"]} - {game["genre"]} - {game["developer"]} - {game['release year']}')
+                num += 1
+
+        else:
+            # If the search criteria is the release year, find games of same release year
+            try:
+
+                if game[criteria] == int(query):
+                    print(f'{num}. {game["name"]} - {game["genre"]} - {game["developer"]} - {game['release year']}')
+                    num += 1
+                    
+            except:
+                input('Invalid Input')
 
 # Main Function for handling UI
 def main():
@@ -104,11 +151,22 @@ def main():
         print(f"{username}'s Library")
 
         # Asks user to input what they want to do
-        match input("What would you like to do? \n1. Go to Library \n2. Add to Library \n3. Remove from Library \n4. Search in Library \n5. Exit \n"):
+        match input("What would you like to do? \n1. Go to Library \n2. Add to Library \n3. Remove from Library \n4. Modify Game \n5. Search in Library \n5. Exit \n"):
 
             # Show Library
             case "1":
-                showLibrary()
+                complexity = input('Do you want to see ALL details or do you want the simple view? \n1. Simple View \n2. All Details \n')
+
+                # Simple View
+                if complexity == '1':
+                    showLibrary(False)
+
+                # All Details
+                elif complexity == '2':
+                    showLibrary(True)
+
+                else:
+                    input('Invalid Input')
 
             # Create Entry
             case "2":
@@ -118,16 +176,22 @@ def main():
             case "3":
                 removeEntry()
             
+            # Modify Entry
+            case '4':
+                modifyEntry()
+
             # Search
-            case "4":
+            case "5":
                 # Asks user to input what they want to search by, and then invokes search to actually search for it
-                match input("Search By: \n1. Title \n2. Genre \n3. Developer \nWhat do you want to search by? (Input Number) "):
+                match input("Search By: \n1. Title \n2. Genre \n3. Developer \n4. Release Year \nWhat do you want to search by? (Input Number) "):
                     case "1":
                         search("name")
                     case "2":
                         search("genre")
                     case "3":
                         search("developer")
+                    case '4':
+                        search('release year')
                     case _:
                         input("Invalid Input")
 
