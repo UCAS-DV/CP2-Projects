@@ -1,5 +1,3 @@
-import csv
-
 # Returns the items in the txt file as a list.
 def read_list():
 
