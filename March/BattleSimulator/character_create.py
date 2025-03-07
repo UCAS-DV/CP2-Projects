@@ -54,17 +54,26 @@ def modify_stat(stat, stat_name, points):
             case _:
                 continue
 
+def show_attacks(character_class): 
+
+    print(f'Class: {character_class['name']}')
+    print(f'Archetype: {character_class['brief']}')
+    print(f'Description: {character_class['description']}')
+
+    # Prints all attack information
+    print('Attacks:')
+    for attack in character_class['attacks']:
+        print(f'    Attack: {attack['name']}')
+        print(f'        Description: {attack['description']}')
+        print(f'        Damage: {attack['damage']}')
+        print(f'        Nerves: {-attack['discomfort']}')
+
+    if input('Do you want to select this class? If so, type "Yes": ').lower() == 'yes':
+        return character_class
+
 def choose_class():
     
     while True:
-
-        # Prints all attack information
-            print('Attacks:')
-            for attack in character_class['attacks']:
-                print(f'    Attack: {attack['name']}')
-                print(f'        Description: {attack['description']}')
-                print(f'        Damage: {attack['damage']}')
-                print(f'        Nerves: {-attack['discomfort']}')
 
         i = 1
         # Prints all class informatiom
@@ -78,13 +87,21 @@ def choose_class():
         match choice:
 
             # Elf
-            case '1'
-        
-        
+            case '1':
+                return show_attacks(gameAssets.classes[0])
 
-        
+            # Skeleton
+            case '2':
+                return show_attacks(gameAssets.classes[1])
 
-        
+            # North Dakotan Mage
+            case '3':
+                return show_attacks(gameAssets.classes[2])
+
+            # Vorlean
+            case '4':
+                return show_attacks(gameAssets.classes[3])
+
 
 
 def read_characters():
@@ -133,7 +150,14 @@ def create_character():
     speed_points = 5
     bravery_points = 5
 
-    character_class = 'Elf'
+    character_class = 'Vorlean'
+
+    while True:
+        try:    
+            character_class = choose_class()['name']
+            break
+        except:
+            pass
     
     while True:
 
@@ -158,7 +182,10 @@ def create_character():
                 bravery_points, total_points = modify_stat(bravery_points, "bravery", total_points)
             
             case '7':
-                choose_class()
+                try:    
+                    character_class = choose_class()['name']
+                except:
+                    pass
 
             case '8':
 
