@@ -1,1 +1,3 @@
-name,health,strength,defense,speed,bravery,class
+name,health,strength,defense,speed,bravery,class,level,wins
+Jaquavious Jaquelle,5,5,5,5,5,Elf,0,0
+Josh,5,5,5,5,5,Elf,0,0

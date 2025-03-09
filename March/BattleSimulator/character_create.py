@@ -1,11 +1,14 @@
 import csv
 import gameAssets
+import os
 
 character_names = []
 
 def modify_stat(stat, stat_name, points):
 
     while True:
+
+        os.system('cls')
 
         match input(f'Do you want to increase or decrease the stat? \nTotal Points: {points} \n1. Increase \n2. Decrease \n3. Back \nEnter Number: '):
 
@@ -56,15 +59,17 @@ def modify_stat(stat, stat_name, points):
 
 def show_attacks(character_class): 
 
+    os.system('cls')
+
     print(f'Class: {character_class['name']}')
     print(f'Archetype: {character_class['brief']}')
     print(f'Description: {character_class['description']}')
+    print(f'Alligence: {character_class['alligence']}')
 
     # Prints all attack information
     print('Attacks:')
     for attack in character_class['attacks']:
         print(f'    Attack: {attack['name']}')
-        print(f'        Description: {attack['description']}')
         print(f'        Damage: {attack['damage']}')
         print(f'        Nerves: {-attack['discomfort']}')
 
@@ -81,6 +86,7 @@ def choose_class():
             print(f'{i}. Class: {character_class['name']}')
             print(f'   Archetype: {character_class['brief']}')
             print(f'   Description: {character_class['description']}')
+            i += 1
 
         choice = input('Which class do you want to look at? ').lower()
         
@@ -125,7 +131,9 @@ def read_characters():
                     'defense': character[3],
                     'speed': character[4],
                     'bravery': character[5],
-                    'class': character[6]
+                    'class': character[6],
+                    'level': character[7],
+                    'wins': character [8]
                 })
 
                 character_names.append(character[0])
@@ -150,7 +158,7 @@ def create_character():
     speed_points = 5
     bravery_points = 5
 
-    character_class = 'Vorlean'
+    character_class = ''
 
     while True:
         try:    
@@ -161,40 +169,67 @@ def create_character():
     
     while True:
 
-        match input(f'How do you wish to modify {name}? \nTotal Points: {total_points} \n1. Name - {name} \n2. Health - {health_points} \n3. Strength - {strength_points} \n4. Defense - {defense_points} \n5. Speed - {speed_points} \n6. Bravery - {bravery_points} \n7. Class - {character_class} \n8. Finish Character \nEnter Number: '):
+        os.system('cls')
 
+        match input(f'How do you wish to modify {name}? \nTotal Points: {total_points} \n1. Name - {name} \n2. Health - {health_points} \n3. Strength - {strength_points} \n4. Defense - {defense_points} \n5. Speed - {speed_points} \n6. Bravery - {bravery_points} \n7. Class - {character_class} \n8. Show Stats \n9. Finish Character \nEnter Number: '):
+
+            # Change Name
             case '1':
                 name = input("Name your character: ")
 
+            # Modify Health
             case '2':
                 health_points, total_points = modify_stat(health_points, "health", total_points)
 
+            # Modify Strength
             case '3':
                 strength_points, total_points = modify_stat(strength_points, "strength", total_points) 
 
+            # Modify Defense
             case '4':
                 defense_points, total_points = modify_stat(defense_points, "defense", total_points)
 
+            # Modify Speed
             case '5':
                 speed_points, total_points = modify_stat(speed_points, "speed", total_points)
 
+            # Modify Bravery
             case '6':
                 bravery_points, total_points = modify_stat(bravery_points, "bravery", total_points)
             
+            # Choose Class
             case '7':
+
+                os.system('cls')
+
                 try:    
                     character_class = choose_class()['name']
                 except:
                     pass
-
+            
+            # Print Stats
             case '8':
+                os.system('cls')
+
+                print(f"{name}'s Stats")
+                print(f'Health: {25 + (health_points * 15)}')
+                print(f'Nerves: {75 + (bravery_points * 5)}')
+                print(f'Strength: {0.25 + (strength_points * 0.15)}')
+                print(f'Defense: {0.25 + (defense_points * 0.15)}')
+                print(f'Speed: {speed_points}')
+                input('Press enter to continue')
+
+            # Save Character
+            case '9':
+
+                os.system('cls')
 
                 # Readds all names to character_names
                 read_characters()
 
                 if total_points == 0 and name not in character_names:
                     print(f'Saving {name}...')
-                    save_character([name,health_points,strength_points,defense_points,speed_points,bravery_points,character_class])
+                    save_character([name,health_points,strength_points,defense_points,speed_points,bravery_points,character_class,0,0])
                     
                     # Prints the stats of the character
                     characters = read_characters()
@@ -206,6 +241,3 @@ def create_character():
                     input('Oops! All of your points have not been spent. You need to spend all of your points! (Enter to continue)')
                 elif name in character_names:
                     input("Oops! It seems like you already have a character with that name! Please change your character's name! (Enter to continue)")
-
-
-create_character()
