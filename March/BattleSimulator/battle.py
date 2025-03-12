@@ -207,7 +207,7 @@ def fight(character_1, character_2):
         # Checks who won
         if player_1['health'] <= 0:
             print(f'{player_2['name']} Wins!')
-            return character_1
+            return character_2
         elif player_2['health'] <= 0:
             print(f'{player_1['name']} Wins!')
-            return character_2
+            return character_1

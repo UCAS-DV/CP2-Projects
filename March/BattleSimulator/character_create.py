@@ -135,7 +135,7 @@ def read_characters():
         for character in character_reader:
 
             # Checks if character is header
-            if character != ['name','health','strength','defense','speed','bravery','class']:
+            if character != ['name','health','strength','defense','speed','bravery','class','level','wins']:
 
                 # Adds character with stats
                 characters.append({
@@ -147,7 +147,7 @@ def read_characters():
                     'bravery': character[5],
                     'class': character[6],
                     'level': character[7],
-                    'wins': character [8]
+                    'wins': character[8]
                 })
 
                 character_names.append(character[0])
@@ -171,13 +171,31 @@ def remove_character(character_to_delete):
         # LOOP through every character and readd them except for the one to delete
         for character in characters:
             if character != character_to_delete:
+                print('Added Character')
+                print(character)
                 character_writer.writerow(character)
             else:
+                print('Deleted Character')
                 pass
 
+def update_value(character_to_update, property, value):
+    characters = read_characters()
 
+    for character in character_to_update:
+        if character == character_to_update:
+            remove_character(character)
+            
+            readded_character = []
+            for stat in character:
+                if stat == property:
+                    readded_character.append(value)
+                else:
+                    readded_character.append(character[stat])
 
-def create_character(level):
+            save_character(readded_character)
+            
+
+def create_character(level,wins):
     total_points = level
 
     name = input('Name your character: ')
@@ -259,7 +277,7 @@ def create_character(level):
 
                 if total_points == 0 and name not in character_names:
                     print(f'Saving {name}...')
-                    save_character([name,health_points,strength_points,defense_points,speed_points,bravery_points,character_class,0,0])
+                    save_character([name,health_points,strength_points,defense_points,speed_points,bravery_points,character_class,level,wins])
                     
                     # Prints the stats of the character
                     characters = read_characters()
