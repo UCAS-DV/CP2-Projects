@@ -12,8 +12,10 @@ def modify_stat(stat, stat_name, points):
 
         match input(f'Do you want to increase or decrease the stat? \nTotal Points: {points} \n1. Increase \n2. Decrease \n3. Back \nEnter Number: '):
 
+            # Increase
             case '1':
 
+                # Only add points if there are points to add
                 if points != 0:
 
                     print(f'Total Points: {points}')
@@ -25,16 +27,19 @@ def modify_stat(stat, stat_name, points):
                     except:
                         input('You need to enter a number. (Enter to continue)')
                         continue
-
+                    
+                    # If the player tries to add more points than there are, tell them off
                     if points - change < 0:
                         input('You do not have enough points. (Enter to continue)')
                         continue
-
-                    elif points - change > 0:
+                    # If the player tries to add an appropriate amount of points, show them how many points they've added
+                    elif points - change >= 0:
                         print(f'{stat_name.capitalize()} = {stat + change}')
 
+                        # Return the new deducted stat value and the new increased points value
                         return stat + change, points - change
                     
+            # Decrease
             case '2':
 
                 print(f'Total Points: {points}')
@@ -46,14 +51,19 @@ def modify_stat(stat, stat_name, points):
                 except:
                     input('You need to enter a number. (Enter to continue)')
                     continue
+                
+                if stat - change >= 0:
+                    print(f'{stat_name.capitalize()}: {stat - change}')
 
-                print(f'{stat_name.capitalize()}: {stat - change}')
-
-                return stat - change, points + change
+                    return stat - change, points + change
+                else:
+                    input(f'There are not enough points in {stat_name} to deduct. (Enter to continue)')
             
+            # Back
             case '3':
                 return stat, points
             
+            # Invalid Input
             case _:
                 continue
 
@@ -61,17 +71,24 @@ def show_attacks(character_class):
 
     os.system('cls')
 
+    
     print(f'Class: {character_class['name']}')
-    print(f'Archetype: {character_class['brief']}')
+    print(f'Specialty: {character_class['brief']}')
     print(f'Description: {character_class['description']}')
     print(f'Alligence: {character_class['alligence']}')
 
     # Prints all attack information
     print('Attacks:')
+    i = 1
     for attack in character_class['attacks']:
-        print(f'    Attack: {attack['name']}')
-        print(f'        Damage: {attack['damage']}')
-        print(f'        Nerves: {-attack['discomfort']}')
+        print(f'{i}.    Attack: {attack['name']}')
+        print(f'          Damage: {attack['damage']}')
+        print(f'          Nerves: {-attack['discomfort']}')
+        if attack['target_self']:
+            print(f'          Targer: User')
+        else:
+            print(f'          Targer: Enemy')
+        i += 1
 
     if input('Do you want to select this class? If so, type "Yes": ').lower() == 'yes':
         return character_class
@@ -84,11 +101,10 @@ def choose_class():
         # Prints all class informatiom
         for character_class in gameAssets.classes:
             print(f'{i}. Class: {character_class['name']}')
-            print(f'   Archetype: {character_class['brief']}')
-            print(f'   Description: {character_class['description']}')
+            print(f'   Specialty: {character_class['brief']}')
             i += 1
 
-        choice = input('Which class do you want to look at? ').lower()
+        choice = input('Which class do you want to look at? (Enter Number): ').lower()
         
         match choice:
 
@@ -107,8 +123,6 @@ def choose_class():
             # Vorlean
             case '4':
                 return show_attacks(gameAssets.classes[3])
-
-
 
 def read_characters():
 
@@ -146,9 +160,25 @@ def save_character(character):
         character_writer = csv.writer(character_file)
 
         character_writer.writerow(character)
-              
-def create_character():
-    total_points = 0
+
+def remove_character(character_to_delete):
+
+    characters = read_characters()
+
+    with open('March/BattleSimulator/characters.csv', 'w', newline='') as character_file:
+        character_writer = csv.writer(character_file)
+
+        # LOOP through every character and readd them except for the one to delete
+        for character in characters:
+            if character != character_to_delete:
+                character_writer.writerow(character)
+            else:
+                pass
+
+
+
+def create_character(level):
+    total_points = level
 
     name = input('Name your character: ')
 
@@ -221,7 +251,7 @@ def create_character():
 
             # Save Character
             case '9':
-
+                
                 os.system('cls')
 
                 # Readds all names to character_names
@@ -241,3 +271,5 @@ def create_character():
                     input('Oops! All of your points have not been spent. You need to spend all of your points! (Enter to continue)')
                 elif name in character_names:
                     input("Oops! It seems like you already have a character with that name! Please change your character's name! (Enter to continue)")
+
+# create_character()
