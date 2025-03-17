@@ -4,11 +4,11 @@ from character_create import read_characters
 from os import system
 
 # Prints out messages with multiple parts
-def Dialogue(dialogue):
+def Dialogue(dialogue, attacker, defender):
     i = 0
     for line in dialogue:
         i += 1
-        input(f'{line} ({i}/{len(dialogue)} Enter to Continue)')
+        input(f'{line.format(lname=defender,wname=attacker)} ({i}/{len(dialogue)} Enter to Continue)')
 
 # Inflicts the effects of attacks
 def inflict_attack(attack, turn_taker, victim):
@@ -64,16 +64,16 @@ def inflict_attack(attack, turn_taker, victim):
     match nerve_multiplier:
         case 0:
             effectiveness = ['Action was a complete failure.']
-            Dialogue(user_text + attack['super_failure'] + effectiveness)
+            Dialogue(user_text + attack['super_failure'] + effectiveness, turn_taker['name'], victim['name'])
         case 0.25:
             effectiveness = ['Action was a ineffective.']
-            Dialogue(user_text + attack['failure'] + effectiveness)         
+            Dialogue(user_text + attack['failure'] + effectiveness, turn_taker['name'], victim['name'])         
         case 1:
             effectiveness = ['Action was a success!']
-            Dialogue(user_text + attack['effective'] + effectiveness)
+            Dialogue(user_text + attack['effective'] + effectiveness, turn_taker['name'], victim['name'])
         case 1.5:
             effectiveness = ['Action was super effective!']
-            Dialogue(user_text + attack['super_effective'] + effectiveness)
+            Dialogue(user_text + attack['super_effective'] + effectiveness, turn_taker['name'], victim['name'])
 
     # Indicates how much health and nerves the attack inflicts
     if target_self:
@@ -90,14 +90,10 @@ def take_turn(turn_taker, victim):
 
     while True:
 
-        system('cls')
-
         print(f"-!-!-!-!- {turn_taker['name']}'s Turn -!-!-!-!-")
         print('1. Check Stats \n2. Select Attack')
         
         match input('What do you want to do (Enter Number): '):
-
-            
 
             # Check Stats
             case '1':

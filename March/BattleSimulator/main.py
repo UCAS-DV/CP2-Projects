@@ -62,7 +62,8 @@ def choose_characters(preview):
         return character_1, character_2
     else:
         return choose_character()
-            
+
+# Main function  
 def main():
     
     while True:
@@ -71,12 +72,14 @@ def main():
 
         print('-~-~-~-~- Battle for the Country -~-~-~-~-')
 
-        print(len(character_create.read_characters()))
+        # Checks if there are enough characters to battle with
         if len(character_create.read_characters()) >= 2:
+
             match input('1. Backstory \n2. Create Fighter \n3. Fighter List \n4. Battle \n5. Exit \nEnter the number of the option you want to select: '):
+
                 # Backstory
                 case '1':
-                    battle.Dialogue(gameAssets.intro)
+                    battle.Dialogue(gameAssets.intro, 0, 0)
                 
                 # Create Character
                 case '2':
@@ -91,42 +94,65 @@ def main():
 
                     while True:
 
-                        os.system('Cls')
-
                         match input('-!-!-!-!- Battle -!-!-!-!- \n1. Tutorial \n2. Battle \n3. Back \nEnter the number of the option you want to select: '):
 
                             # Tutorial
                             case '1':
-                                battle.Dialogue(gameAssets.tutorial)
+                                battle.Dialogue(gameAssets.tutorial, 0, 0)
 
                             # Battle
                             case '2':
                                 player_1, player_2 = choose_characters(False)
 
-
                                 if player_1 != player_2:
                                     # Determine winner of battle by having battle
                                     winner = battle.fight(player_1, player_2)
 
-                                    # Converts wins and level to integers
-                                    winner['wins'] = int(winner['wins'])
-                                    winner['level'] = int(winner['level'])
+                                    character_create.edit_character(winner, 'wins', int(winner['wins']) + 1)
 
-                                    # Whoever wins gets one extra win on their character
-                                    input(f'{winner['name']} has {winner['wins'] + 1} wins (Enter to Continue)')
+                                    winner['wins'] = str(int(winner['wins']) + 1)
 
-                                    if winner['wins'] == winner['level'] * 2:
+                                    # Checks if the player has enough wins to level up
+                                    if int(winner['wins']) > int(winner['level']) * 2:
                                         
-                                        winner['level'] += 1
+                                        character_create.edit_character(winner, 'level', int(winner['level']) + 1)
+                                        input(f'{winner['name']} is now at Level {int(winner['level']) + 1}')
 
-                                        character_create.remove_character(winner)
-                                        input(f'{winner['name']} has leveled up to level {winner['level']} (Enter to Continue)')
+                                        winner['level'] = str(int(winner['level']) + 1)
 
-                                        input(f'Remaking {winner['name']}...')
-                                        character_create.create_character(winner['level'], winner['wins'] + 1)
-                                    else:
-                                        print('here')
-                                        character_create.update_value(winner, 'wins', winner['wins'] + 1)
+                                        while True:
+                                            match input('Which stat do you want to buff by one point? \n1. Health \n2. Strength \n3. Defense \n4. Speed \n5. Bravery \nEnter Number: '):
+
+                                                # Health
+                                                case '1':
+                                                    character_create.edit_character(winner, 'health', int(winner['health']) + 1)
+                                                    print(f"{winner['name']} now has {int(winner['health']) + 1} health points.")
+                                                    break
+
+                                                # Strength
+                                                case '2':
+                                                    character_create.edit_character(winner, 'strength', int(winner['strength']) + 1)
+                                                    print(f"{winner['name']} now has {int(winner['strength']) + 1} strength points.")
+                                                    break
+
+                                                # Defense
+                                                case '3':
+                                                    character_create.edit_character(winner, 'defense', int(winner['defense']) + 1)
+                                                    print(f"{winner['name']} now has {int(winner['defense']) + 1} defense points.")
+                                                    break
+
+                                                # Speed
+                                                case '4':
+                                                    character_create.edit_character(winner, 'speed', int(winner['speed']) + 1)
+                                                    print(f"{winner['name']} now has {int(winner['speed']) + 1} speed points.")
+                                                    break
+
+                                                # Bravery
+                                                case '5':
+                                                    character_create.edit_character(winner, 'bravery', int(winner['bravery']) + 1)
+                                                    print(f"{winner['name']} now has {int(winner['bravery']) + 1} bravery points.")
+                                                    break
+
 
                             # Back
                             case '3':
@@ -139,10 +165,8 @@ def main():
         else:
             input('No fighters found. (Enter to Continue)')
             input('Creating First Fighter... (Enter to Continue)')
-            character_create.create_character(0, 0)
+            character_create.create_character()
             input('Creating Second Fighter... (Enter to Continue)')
-            character_create.create_character(0, 0)
-
-
+            character_create.create_character()
 
 main()

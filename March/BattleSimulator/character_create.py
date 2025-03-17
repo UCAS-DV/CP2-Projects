@@ -4,6 +4,7 @@ import os
 
 character_names = []
 
+# Allows user to modify stats
 def modify_stat(stat, stat_name, points):
 
     while True:
@@ -67,10 +68,10 @@ def modify_stat(stat, stat_name, points):
             case _:
                 continue
 
+# Shows properties and attacks of class
 def show_attacks(character_class): 
 
     os.system('cls')
-
     
     print(f'Class: {character_class['name']}')
     print(f'Specialty: {character_class['brief']}')
@@ -90,9 +91,11 @@ def show_attacks(character_class):
             print(f'          Targer: Enemy')
         i += 1
 
+    # Checks if the user wants to select this class
     if input('Do you want to select this class? If so, type "Yes": ').lower() == 'yes':
         return character_class
 
+# Allows player to look at a class
 def choose_class():
     
     while True:
@@ -116,14 +119,15 @@ def choose_class():
             case '2':
                 return show_attacks(gameAssets.classes[1])
 
-            # North Dakotan Mage
-            case '3':
-                return show_attacks(gameAssets.classes[2])
+            # North Dakotan Mage (Cut Class)
+            #case '3':
+            #    return show_attacks(gameAssets.classes[2])
 
-            # Vorlean
-            case '4':
-                return show_attacks(gameAssets.classes[3])
+            # Vorlean (Cut Class)
+            #case '4':
+            #    return show_attacks(gameAssets.classes[3])
 
+# Reads character onto list
 def read_characters():
 
     with open('March/BattleSimulator/characters.csv', 'r') as character_file:
@@ -154,6 +158,7 @@ def read_characters():
 
         return characters
 
+# Saves character to csv
 def save_character(character):
 
     with open('March/BattleSimulator/characters.csv', 'a', newline='') as character_file:
@@ -161,42 +166,33 @@ def save_character(character):
 
         character_writer.writerow(character)
 
-def remove_character(character_to_delete):
-
+# Edits property of character
+def edit_character(character_to_edit, property, value):
+    
     characters = read_characters()
+
+    # Finds character to modify and modfies them
+    for character in characters:
+        if character == character_to_edit:
+            character[property] = value
 
     with open('March/BattleSimulator/characters.csv', 'w', newline='') as character_file:
+
         character_writer = csv.writer(character_file)
 
-        # LOOP through every character and readd them except for the one to delete
+        # Writes header
+        character_writer.writerow(['name','health','strength','defense','speed','bravery','class','level','wins'])
+
+        # Readds all characters
         for character in characters:
-            if character != character_to_delete:
-                print('Added Character')
-                print(character)
-                character_writer.writerow(character)
-            else:
-                print('Deleted Character')
-                pass
-
-def update_value(character_to_update, property, value):
-    characters = read_characters()
-
-    for character in character_to_update:
-        if character == character_to_update:
-            remove_character(character)
             
-            readded_character = []
-            for stat in character:
-                if stat == property:
-                    readded_character.append(value)
-                else:
-                    readded_character.append(character[stat])
+            character_writer.writerow([character['name'], character['health'], character['strength'], 
+                                       character['defense'], character['speed'], character['bravery'], 
+                                       character['class'], character['level'], character['wins']])
 
-            save_character(readded_character)
-            
-
-def create_character(level,wins):
-    total_points = level
+# Allows users to create a character
+def create_character():
+    total_points
 
     name = input('Name your character: ')
 
@@ -277,7 +273,7 @@ def create_character(level,wins):
 
                 if total_points == 0 and name not in character_names:
                     print(f'Saving {name}...')
-                    save_character([name,health_points,strength_points,defense_points,speed_points,bravery_points,character_class,level,wins])
+                    save_character([name,health_points,strength_points,defense_points,speed_points,bravery_points,character_class,0,0])
                     
                     # Prints the stats of the character
                     characters = read_characters()
@@ -289,5 +285,3 @@ def create_character(level,wins):
                     input('Oops! All of your points have not been spent. You need to spend all of your points! (Enter to continue)')
                 elif name in character_names:
                     input("Oops! It seems like you already have a character with that name! Please change your character's name! (Enter to continue)")
-
-# create_character()
