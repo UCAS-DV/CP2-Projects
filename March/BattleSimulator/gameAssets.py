@@ -110,7 +110,7 @@ classes = [
                 'damage': 15,
                 'discomfort': 0,
                 'target_self': False,
-                'super_effective': ['Pow!', 'The shin kick does...', 'absolutely nothing!', '{wname} missed completely!', 'But {lname} then slipped on a convienently placed banana.'],
+                'super_effective': ['Pow!', 'The shin kick does...', 'absolutely nothing!', '{wname} missed completely!', 'But {lname} then slipped on a convienently placed banana peel.'],
                 'effective': ['Pow!', '{wname} goes for a kick to the shin!'],
                 'failure': ['Pow?', '{wname} goes for a kick to the shin but apparently without skin, muscles, or anything but bones, it is not very effective.'],
                 'super_failure': ['Womp!', '{wname} goes for a kick to the shin but spins around and falls over.', 'The entire stadium laughs at {wname}.', 

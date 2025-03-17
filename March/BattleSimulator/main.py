@@ -83,7 +83,7 @@ def main():
                 
                 # Create Character
                 case '2':
-                    character_create.create_character(0, 0)
+                    character_create.create_character()
 
                 # Choose Character
                 case '3':

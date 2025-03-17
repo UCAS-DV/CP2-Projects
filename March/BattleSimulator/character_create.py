@@ -192,7 +192,7 @@ def edit_character(character_to_edit, property, value):
 
 # Allows users to create a character
 def create_character():
-    total_points
+    total_points = 0
 
     name = input('Name your character: ')
 
