@@ -146,7 +146,7 @@ classes = [
                                   "{wname} then goes to the cow factory but it's closed on the weekends.", '{wname} heads back to the arena, disappointed and milkless.']
             },
             {
-                'name': 'Reassurance?',
+                'name': 'Reassurance',
                 'damage': 0,
                 'discomfort': -15,
                 'target_self': True,

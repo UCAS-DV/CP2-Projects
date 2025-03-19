@@ -1,8 +1,11 @@
 import csv
 import gameAssets
 import os
+import matplotlib.pyplot as plt
+from faker import Faker 
 
 character_names = []
+fake = Faker()
 
 # Allows user to modify stats
 def modify_stat(stat, stat_name, points):
@@ -194,7 +197,12 @@ def edit_character(character_to_edit, property, value):
 def create_character():
     total_points = 0
 
-    name = input('Name your character: ')
+    name = input("Name your character. \nIf you can't think of a name, type 'Random_' for a random name: ")
+
+    if name.lower() == 'random_':
+        name = fake.name()
+
+    input(f'Name: {name} \n(Enter to Continue)')
 
     health_points = 5
     strength_points = 5
@@ -219,7 +227,10 @@ def create_character():
 
             # Change Name
             case '1':
-                name = input("Name your character: ")
+                name = input("Name your character. \nIf you can't think of a name, type 'Random_' for a random name")
+
+                if name.lower() == 'random_':
+                    name = fake.name()
 
             # Modify Health
             case '2':
@@ -253,13 +264,17 @@ def create_character():
             
             # Print Stats
             case '8':
-                os.system('cls')
+                
+                # Visualize Stats
+                plt.bar(['Health', 'Bravery', 'Strength', 'Defense', 'Speed'],
+                        [health_points, bravery_points, strength_points, defense_points, speed_points])
+                plt.show()
 
                 print(f"{name}'s Stats")
                 print(f'Health: {25 + (health_points * 15)}')
                 print(f'Nerves: {75 + (bravery_points * 5)}')
-                print(f'Strength: {0.25 + (strength_points * 0.15)}')
-                print(f'Defense: {0.25 + (defense_points * 0.15)}')
+                print(f'Strength: {0.25 + (strength_points * 0.15)}x')
+                print(f'Defense: {0.25 + (defense_points * 0.15)}x')
                 print(f'Speed: {speed_points}')
                 input('Press enter to continue')
 

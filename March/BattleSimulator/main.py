@@ -3,6 +3,7 @@ import battle
 import gameAssets
 import os
 import random
+import matplotlib.pyplot as plt
 
 def choose_characters(preview):
     characters = character_create.read_characters()
@@ -41,7 +42,7 @@ def choose_characters(preview):
             for character in characters:
                 character_names.append(character['name'].lower())
 
-                print(f'{i}. {character['name']} - Lvl {character['level']} - {character['wins']} Wins')
+                print(f'{i}. {character['name']} - {character['class']} - Lvl {character['level']} - {character['wins']} Wins')
                 i += 1
 
             choice = input('Choose a character to look at (Enter name): ').lower()
@@ -51,8 +52,19 @@ def choose_characters(preview):
                     if choice == character['name'].lower():
                         choosen_character = character
 
-                for stat in choosen_character:
-                    print(f'{stat.capitalize()}: {choosen_character[stat]}')
+                names = []
+                values = []
+
+                for stat in choosen_character:          
+
+                    if stat not in ['name', 'class', 'backstory']:
+                        names.append(stat.capitalize())
+                        values.append(int(choosen_character[stat]))
+
+                # Visualizes stats
+
+                plt.bar(x=names,height=values)
+                plt.show()
 
                 if input('Do you want to select this character? If so, type "Yes": ').lower() == 'yes':
                     return choosen_character
