@@ -22,12 +22,12 @@ Short paragraph here maybe a bulletted list
 
 ## Used Technologies
 ---
-+ Matplotlib - It visualizes stats while playing and looking at characters
++ Matplotlib - It visualizes stats while playing and looking at characters.
 'pip install matplotlib'
-+ Pandas - it analyzes stats while looking at them
++ Pandas - It analyzes stats while looking at them.
 'pip install pandas'  
-+ name of the tech - what it does in the project
-'pip install instructions'   
++ Faker - It allows people to randomly generate names while creating characters
+'pip install faker'   
 
 
 ## Current Features
