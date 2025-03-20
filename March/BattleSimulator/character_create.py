@@ -197,7 +197,7 @@ def edit_character(character_to_edit, property, value):
 def create_character():
     total_points = 0
 
-    name = input("Name your character. \nIf you can't think of a name, type 'Random_' for a random name: ")
+    name = input("Name your character. \nIf you can't think of a name, type 'random_' for a random name: ")
 
     if name.lower() == 'random_':
         name = fake.name()

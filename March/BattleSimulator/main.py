@@ -4,6 +4,7 @@ import gameAssets
 import os
 import random
 import matplotlib.pyplot as plt
+import pandas as pd
 
 def choose_characters(preview):
     characters = character_create.read_characters()
@@ -54,17 +55,28 @@ def choose_characters(preview):
 
                 names = []
                 values = []
+                choosen_character_data = []
 
                 for stat in choosen_character:          
 
                     if stat not in ['name', 'class', 'backstory']:
                         names.append(stat.capitalize())
                         values.append(int(choosen_character[stat]))
+                        if stat not in ['wins', 'level']:
+                            choosen_character_data.append(int(choosen_character[stat]))
 
                 # Visualizes stats
 
                 plt.bar(x=names,height=values)
                 plt.show()
+
+                character_data = pd.DataFrame([choosen_character_data])
+
+                print(f'Stat Average: {character_data.mean(1).values[0]}')
+                print(f'Mode of Stats: {character_data.mode(1).values[0]}')
+                print(f'Median Stat: {character_data.median(1).values[0]}')
+                print(f'Highest Stat: {character_data.max(1).values[0]}')
+                print(f'Lowest Stat: {character_data.min(1).values[0]}')
 
                 if input('Do you want to select this character? If so, type "Yes": ').lower() == 'yes':
                     return choosen_character
