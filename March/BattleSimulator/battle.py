@@ -138,6 +138,7 @@ def convert_stats(player):
 
     max_nerves = 75 + (int(player['bravery']) * 5)
     nerves = max_nerves
+    min_nerves = 25 + (int(player['bravery'] * 5))
 
     strength = 0.25 + (int(player['strength']) * 0.15)
     defense = 0.25 + (int(player['defense']) * 0.15)
@@ -155,6 +156,7 @@ def convert_stats(player):
             'health': health,
             'max_nerves': max_nerves,
             'nerves': nerves,
+            'min_nerves': 
             'strength': strength,
             'defense': defense,
             'attacks': attacks,
