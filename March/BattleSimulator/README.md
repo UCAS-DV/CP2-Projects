@@ -13,7 +13,7 @@ Does not need to be done.
 This program is a two-player video game. It is intended to be played with two players on the same computer, taking turns on the computer to take turns in game. It is also a python program so it needs python to run.
 
 This is what the game should look like upon starting it if you do not have two or more characters saved:
-![image]https://github.com/UCAS-DV/CP2-Projects/blob/main/March/BattleSimulator/Screenshot%202025-03-21%20100352.png
+![image](https://github.com/UCAS-DV/CP2-Projects/blob/main/March/BattleSimulator/Screenshot%202025-03-21%20100352.png)
 
 This is what the game should look like upon starting it if you do have two or more characters saved:
 ![image](https://github.com/UCAS-DV/CP2-Projects/blob/main/March/BattleSimulator/Screenshot%202025-03-21%20100331.png)
