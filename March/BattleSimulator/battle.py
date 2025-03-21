@@ -37,6 +37,10 @@ def inflict_attack(attack, turn_taker, victim):
 
         health = victim['health'] + health_effect
         nerves = victim['nerves'] + nerve_effect
+
+        if victim['nerves'] < victim['min_nerves']:
+            victim['nerves'] = victim['min_nerves']
+
         target_self = False
     # IF the attack does target self, have it affect self
     else:
@@ -101,6 +105,7 @@ def take_turn(turn_taker, victim):
                 print(f"-~-~-~-~- {turn_taker['name']}'s Stats -~-~-~-~-")
                 print(f'{turn_taker['health']}/{turn_taker['max_health']} Health')
                 print(f'{turn_taker['nerves']}/{turn_taker['max_nerves']} Nerves')
+                print(f"Nerves can't go below {turn_taker['min_nerves']}")
                 print(f'x{turn_taker['strength']} Damage Multipler')
                 print(f'x{turn_taker['defense']} Damage Resistance')
 
@@ -108,6 +113,7 @@ def take_turn(turn_taker, victim):
                 print(f"-~-~-~-~- {victim['name']}'s Stats -~-~-~-~-")
                 print(f"{victim['health']}/{victim['max_health']} Health")
                 print(f"{victim['nerves']}/{victim['max_nerves']} Nerves")
+                print(f"Nerves can't go below {victim['min_nerves']}")
                 print(f"x{victim['strength']} Damage Multiplier")
                 print(f"x{victim['defense']} Damage Resistance")
 
@@ -156,7 +162,7 @@ def convert_stats(player):
             'health': health,
             'max_nerves': max_nerves,
             'nerves': nerves,
-            'min_nerves': 
+            'min_nerves': min_nerves,
             'strength': strength,
             'defense': defense,
             'attacks': attacks,
