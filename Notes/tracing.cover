@@ -1,0 +1,13 @@
+       # Darius Vaiaoga, Tracing Notes
+       
+       # python -m trace --count C:\Users\darius.vaiaoga\Desktop\CP2-Projects\Notes\tracing.py
+       
+       # --
+       
+    1: def sub(num_one, num_two):
+           return num_one - num_two
+       
+    1: def add(num_one, num_two):
+    1:     return num_one + num_two
+       
+    1: add(5,4)
