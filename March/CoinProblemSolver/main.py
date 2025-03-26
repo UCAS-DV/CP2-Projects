@@ -34,19 +34,32 @@ def solve():
                 denomination_amounts.append(denomination)
                 denomination_amounts.append(int(target // country[denomination]))
 
-            target -= round((target // country[denomination]) * country[denomination],2)
-            print(target)
+            target -= (target // country[denomination]) * country[denomination]
+            target = round(target, 2)
 
-        print(denomination_amounts)
+        # Formats the answer
+        final_output = ''
+        for amount in denomination_amounts:    
+
+            if type(amount) == str:
+                final_output += f'{amount}: '
+
+            else:
+                final_output += f'{amount}\n'
+
+        return final_output
 
 def main():
     while True:
         print('-~-~-~-~-~- Coin Change Problem -~-~-~-~-~-')
         match input('1. Info \n2. Solve \n3. Exit \nWhat do you want to do (Input Number): '):
+            # Info
             case '1':
-                print('Info')
+                input('The Coin Change Problem is a classic alogrithmic problem.\nThe problem is if given a target amount of currency, what is the minimum amount of coins and banknotes necessary to reach that target amount \nIn this program, you will enter the target currency and the type of currency and then this program will solve the problem. \n(Enter to Continue)')
+            # Solve
             case '2':
-                solve()
+                print(solve())
+            # Exit
             case '3':
                 print('Exiting Program...')
                 break
