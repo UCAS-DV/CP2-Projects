@@ -12,11 +12,8 @@ Does not need to be done.
 ---
 This program is a simple problem solver. It is accepts three currency types and allows the user to input the target amount
 
-This is what the game should look like upon starting it if you do not have two or more characters saved:
-![image](https://github.com/UCAS-DV/CP2-Projects/blob/main/March/BattleSimulator/Screenshot%202025-03-21%20100352.png)
-
-This is what the game should look like upon starting it if you do have two or more characters saved:
-![image](https://github.com/UCAS-DV/CP2-Projects/blob/main/March/BattleSimulator/Screenshot%202025-03-21%20100331.png)
+This is what the program should look like upon it starting
+![image](https://github.com/UCAS-DV/CP2-Projects/blob/main/March/CoinProblemSolver/Screenshot%202025-03-26%20102911.png)
 
 ## Used Technologies
 ---
