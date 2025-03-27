@@ -12,7 +12,7 @@ Does not need to be done.
 ---
 This program is a simple problem solver. It is accepts three currency types and allows the user to input the target amount
 
-This is what the program should look like upon it starting
+This is what the program should look like upon it starting:
 ![image](https://github.com/UCAS-DV/CP2-Projects/blob/main/March/CoinProblemSolver/Screenshot%202025-03-26%20102911.png)
 
 ## Used Technologies
