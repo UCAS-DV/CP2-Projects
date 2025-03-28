@@ -61,4 +61,5 @@ def solve():
             user_target = round(user_target, 2)
 
         print(format_output(denomination_amounts))
+        break
         
