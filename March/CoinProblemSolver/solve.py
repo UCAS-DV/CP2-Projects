@@ -1,7 +1,22 @@
 import countries
 
+# Formats Output
+def format_output(denomination_amounts):
+    final_output = ''
+    for amount in denomination_amounts:    
+
+        if type(amount) == str:
+            final_output += f'{amount}: '
+
+        else:
+            final_output += f'{amount}\n'
+
+    return final_output
+
+# Solves Coin Change Problem
 def solve():
 
+    # Runs menu where the user decides the country and target amount to solve for
     def solve_menu():
         i = 1
         for country in countries.country_dems:
@@ -45,14 +60,5 @@ def solve():
             user_target -= (user_target // user_country[denomination]) * user_country[denomination]
             user_target = round(user_target, 2)
 
-        # Formats the answer
-        final_output = ''
-        for amount in denomination_amounts:    
-
-            if type(amount) == str:
-                final_output += f'{amount}: '
-
-            else:
-                final_output += f'{amount}\n'
-
-        return final_output
+        print(format_output(denomination_amounts))
+        
