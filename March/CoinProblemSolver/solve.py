@@ -60,6 +60,6 @@ def solve():
             user_target -= (user_target // user_country[denomination]) * user_country[denomination]
             user_target = round(user_target, 2)
 
-        print(format_output(denomination_amounts))
-        break
+        return format_output(denomination_amounts)
+    
         
